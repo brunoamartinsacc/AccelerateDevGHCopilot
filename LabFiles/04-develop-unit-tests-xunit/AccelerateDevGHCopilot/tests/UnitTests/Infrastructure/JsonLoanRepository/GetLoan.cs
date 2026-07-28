@@ -17,8 +17,12 @@ public class GetLoanTest
     {
         _mockLoanRepository = Substitute.For<ILoanRepository>();
 
-        var projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
-        var jsonDirectory = Path.Combine(projectRoot, "src", "Library.Console", "bin", "Debug", "net9.0", "Json");
+        var jsonDirectory = Path.Combine(AppContext.BaseDirectory, "Json");
+        if (!Directory.Exists(jsonDirectory))
+        {
+            var projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
+            jsonDirectory = Path.Combine(projectRoot, "src", "Library.Console", "Json");
+        }
 
         _configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
